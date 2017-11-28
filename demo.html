@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="GBK">
+<title>Video.js 5.18.4</title>
+	<link href="css/video-js.css" rel="stylesheet">
+<script src="js/video.min.js"></script>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script>
+  videojs.options.flash.swf = "http://example.com/path/to/video-js.swf"
+</script>
+<style>
+	/*屏蔽全屏按钮*/
+	.video-js .vjs-fullscreen-control {
+		display: none;
+	}
+</style>
+</head>
+
+<body>
+<!-- vjs-fluid,.vjs-4-3,.vjs-16-9 -->
+
+<video id="example_video_1" autoplay class="video-js vjs-default-skin vjs-big-play-centered"
+  controls width="800" height="450"
+  poster="5.jpg"
+  data-setup='{"example_option":true}'>
+ <source src="test.mp4" type='video/mp4' />
+ <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+ <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+</video>
+<script>    	
+  videojs("example_video_1", {}, function(){
+		var myPlayer = this;
+		myPlayer.on("timeupdate", function(){
+			console.log("播放进度", this.currentTime());
+		});
+		myPlayer.on("play", function(){
+			console.log("播放", this.currentTime());
+			$('.vjs-big-play-button').fadeOut('slow').css("display","none");
+			$('.vjs-control-bar').fadeIn('slow').css("visibility","visible");
+		});
+		myPlayer.on("pause", function(){
+			console.log("暂停", this.currentTime());
+			$('.vjs-big-play-button').fadeIn('slow').css("display","block");
+			$('.vjs-control-bar').fadeOut('slow').css("visibility","hidden");
+		});
+		//myPlayer.currentTime(2); //设置播放进度
+		//myPlayer.play(); //播放
+  });
+</script>
+</body>
+</html>
